@@ -29,8 +29,19 @@ open Microsoft.FSharp.Control
 
 //printfn "%s" "Hello word!"
 
-open Microsoft.FSharp.Reflection
+open System.Reflection
+open Microsoft.FSharp.Metadata
 
-FSharpType.GetRecordFields(typeof<PersistenceModel.Order>)
-|> Array.map(fun x -> x.Name)
-|> Array.iter(printfn "%s")
+let assembly = Assembly.GetExecutingAssembly()
+
+let mdl = FSharpAssembly
+                .FromAssembly(assembly)
+                .Entities 
+                |> Seq.find(fun entity -> entity.DisplayName = "PersistenceModel")
+                
+mdl.NestedEntities
+|> Seq.filter(fun ent -> ent.IsRecord)
+|> Seq.map(fun ent -> ent.DisplayName)
+|> Seq.iter(printfn "%s")
+
+//let e = FSharpEntity.FromType(typeof<Ex.PersistenceModel>)
