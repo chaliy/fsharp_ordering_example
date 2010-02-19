@@ -43,7 +43,7 @@ module PersistenceModel =
         Price : Amount        
     }
 
-    let Product1 = Guid.NewGuid()
+    let Product1 = new Guid("0b2b5fc1-0f3f-4512-9278-fa38339fe0d2")
     let Product2 = Guid.NewGuid()
     
     let allProducts(ctx) = [{              

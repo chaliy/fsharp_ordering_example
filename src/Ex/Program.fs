@@ -29,19 +29,20 @@ open Microsoft.FSharp.Control
 
 //printfn "%s" "Hello word!"
 
-open System.Reflection
-open Microsoft.FSharp.Metadata
+open Ex.PersistenceModel
 
-let assembly = Assembly.GetExecutingAssembly()
+let t1 =    
 
-let mdl = FSharpAssembly
-                .FromAssembly(assembly)
-                .Entities 
-                |> Seq.find(fun entity -> entity.DisplayName = "PersistenceModel")
-                
-mdl.NestedEntities
-|> Seq.filter(fun ent -> ent.IsRecord)
-|> Seq.map(fun ent -> ent.DisplayName)
-|> Seq.iter(printfn "%s")
-
-//let e = FSharpEntity.FromType(typeof<Ex.PersistenceModel>)
+    use ctx = MongoDB.connect()
+    let col = ctx.["stuff"].["tests"]    
+    col.Insert(doc {              
+                        ID = PersistenceModel.Product1
+                        Title = "123"
+                        AvailableQty = 12.0m
+                        Price = 150.0m
+                   })
+    
+    let cur = col.FindAll()
+    cur.Documents
+    |> Seq.map(fun x -> x.ToString())
+    |> Seq.iter(printfn "%s")

@@ -38,6 +38,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\FSharp\1.0\Microsoft.FSharp.Targets" Condition="!Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
   <ItemGroup>
+    <Compile Include="MongoDb.fs" />
     <Compile Include="Shared.fs" />
     <Compile Include="PersistenceModel.fs" />
     <Compile Include="Inventory.fs" />
@@ -45,8 +46,8 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.PowerPack.Metadata">
-      <HintPath>..\..\lib\FSharpPowerPack\FSharp.PowerPack.Metadata.dll</HintPath>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\..\lib\MongoDB\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core" />
