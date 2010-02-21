@@ -1,50 +1,51 @@
-﻿namespace Ex
+﻿module MongoDB
 
-open MongoDB.Driver
-
-module MongoDB =
+    open MongoDB.Driver
 
     type Context =    
         abstract member Item : string -> MongoDB.Driver.Database with get    
         inherit System.IDisposable
 
-    let connect() =
-        let mongo = Mongo()
-        ignore (mongo.Connect())
-     
-        { new Context with
-            member this.get_Item(name) = mongo.[name]
-            member this.Dispose() = ignore (mongo.Disconnect()) }
+    module Server =       
+        let Connect() =
+            let mongo = Mongo()
+            ignore (mongo.Connect())
+         
+            { new Context with
+                member this.get_Item(name) = mongo.[name]
+                member this.Dispose() = ignore (mongo.Disconnect()) }
 
+    module Cnvt =
 
-[<AutoOpen>]
-module MongoDBEx =
-
-    open System.Globalization
-    open Microsoft.FSharp.Reflection    
-    
-    let doc a =
+        open System.Globalization
+        open Microsoft.FSharp.Reflection 
+        open MongoDB.Driver   
         
-        let t = a.GetType()
-        if (false = FSharpType.IsRecord t) then
-            failwith "Require record" 
+        let toDocument a =
             
-        let prepVal (x : obj) =
-            match x with
-            | :? System.Guid as x -> x.ToString() :> obj
-            | :? System.Decimal as x -> x.ToString(CultureInfo.InvariantCulture) :> obj
-            | x -> x
+            let t = a.GetType()
+            if (false = FSharpType.IsRecord t) then
+                failwith "Requires record" 
+                        
+            let d = new Document()
 
-        let prepName x =
-            match x with
-            | "ID" -> "_id"     
-            | x -> x
-       
-        let d = new Document()
+            (FSharpValue.GetRecordFields a)
+            |> Seq.zip(FSharpType.GetRecordFields t)
+            |> Seq.map(fun (f, v) -> (( match f.Name with
+                                          | "ID" -> "_id"     
+                                          | x -> x ),
+                                      ( match v with
+                                          | :? System.Guid as x -> x.ToString() :> obj
+                                          | :? System.Decimal as x -> x.ToString(CultureInfo.InvariantCulture) :> obj
+                                          | x -> x )))        
+            |> Seq.iter(fun (n, v) -> d.Add(n, v)) 
+            
+            d
 
-        (FSharpValue.GetRecordFields a)
-        |> Seq.zip(FSharpType.GetRecordFields t)
-        |> Seq.map(fun (f, v) -> (prepName f.Name, prepVal v))        
-        |> Seq.iter(fun (n, v) -> d.Add(n, v)) 
-        
-        d
+    type MongoDB.Driver.Database with       
+        member x.For<'a>() =        
+            x.[typeof<'a>.Name]            
+
+        member x.Insert<'a> (a: 'a) =
+            let col = x.For<'a>()
+            col.Insert(Cnvt.toDocument a)

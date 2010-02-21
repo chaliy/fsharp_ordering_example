@@ -7,8 +7,6 @@ type Name = string
 type Ref = System.Guid
 type ID = System.Guid
 
-type Event = obj
-
 // Context
 module Ctx =
     open System

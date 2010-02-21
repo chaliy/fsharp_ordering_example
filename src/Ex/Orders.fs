@@ -1,6 +1,4 @@
-﻿namespace Ex
-
-module Orders =    
+﻿module Ex.Orders    
 
     open System
     open Inventory
@@ -38,11 +36,11 @@ module Orders =
         | OrderCreated of Order
 
     let accept(o : OrderCandidate, ctx : Context, uow : UnitOfWork<Event>) =
-        let oldOrders = PersistenceModel.allOrders ctx
-        let products = PersistenceModel.allProducts ctx
+        //let oldOrders = PersistenceModel.allOrders ctx
+        let products = Views.allProducts ctx
         
         // Ensure there is enough inventory
-        let enough = 
+        let enough =
             o.Lines
             |> Seq.map(fun l -> (l, 
                                  products 

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ex", "Ex\Ex.fsproj", "{F102C342-BF2E-4B13-8EAC-B7797F6A41A6}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Tests\Tests.fsproj", "{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{F102C342-BF2E-4B13-8EAC-B7797F6A41A6}.Debug|x86.Build.0 = Debug|x86
 		{F102C342-BF2E-4B13-8EAC-B7797F6A41A6}.Release|x86.ActiveCfg = Release|x86
 		{F102C342-BF2E-4B13-8EAC-B7797F6A41A6}.Release|x86.Build.0 = Release|x86
+		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Debug|x86.ActiveCfg = Debug|x86
+		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Debug|x86.Build.0 = Debug|x86
+		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Release|x86.ActiveCfg = Release|x86
+		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

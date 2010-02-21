@@ -1,5 +1,3 @@
-﻿namespace Ex
-
-module Inventory =
+﻿module Ex.Inventory
 
     type ProductRef = Ref        

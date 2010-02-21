@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>FsSpec</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FsSpec.Runner.Run">
+<summary>
+ Runs all specs in executing assembly.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FsSpec.Runner">
+<summary>
+ All about running specs
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsSpec.SpecHelpers.Spec">
+<summary>
+ Specification
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FsSpec.SpecHelpers.it(System.String,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Describe single spec clause
+</summary>
+</member>
+<member name="M:FsSpec.SpecHelpers.describe(System.String,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Sub topic of the spec, aggregate spec clauses
+</summary>
+</member>
+<member name="T:FsSpec.SpecHelpers">
+
+</member>
+</members>
+</doc>
