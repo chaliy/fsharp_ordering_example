@@ -73,9 +73,9 @@
         
     let storage = 
         List<ProductAvailability>([{              
-                        ProductID = Product1                                            
-                        Qty = 12.0m                                            
-                  };{                         
-                        ProductID = Product2
-                        Qty = 1234.0m
-                  }])        
+                                        ProductID = Product1                                            
+                                        Qty = 12                                            
+                                  };{                         
+                                        ProductID = Product2
+                                        Qty = 1234
+                                  }])        

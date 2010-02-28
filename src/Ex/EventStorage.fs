@@ -6,32 +6,23 @@
     // Handler per view 
     
     type View<'d, 'r> =    
-        abstract member Map : obj -> 'd seq
-        abstract member Reduce : 'd seq -> 'r seq
-
-    type ProductAvailabilityDelta = {
-        ProductID : ID
-        Delta : Quantity
-    }
-        
+        abstract member Map : obj -> (ID * 'd) seq
+        abstract member Reduce : ID -> ('d seq) -> 'r seq
+    
     let productAvailability3 = 
-        { new View<ProductAvailabilityDelta, ProductAvailability> with
-             member this.Map(evt) = 
+        { new View<Quantity, ProductAvailability> with
+
+             member this.Map evt =
                 seq { match evt with
                       | :? ProductPicked as productPicked ->
-                          yield {
-                                    ProductID = productPicked.Product
-                                    Delta = productPicked.Qty                        
-                                }
+                          yield (productPicked.Product, productPicked.Qty)                                
                       | _ -> () }
-             member this.Reduce(details) = details 
-                                           |> Seq.groupBy(fun x -> x.ProductID)
-                                           |> Seq.map(fun (id, pp) -> (id, pp 
-                                                                           |> Seq.sumBy(fun p -> p.Delta)))
-                                           |> Seq.map(fun (id, qty) -> {
-                                                                            ProductID = id
-                                                                            Qty = qty                
-                                                                       } ) }
+
+             member this.Reduce id details = 
+                seq { yield {
+                                ProductID = id
+                                Qty = details |> Seq.sumBy(fun x -> x)           
+                            } } }               
         
 
     let productAvailability (evt: obj) = 

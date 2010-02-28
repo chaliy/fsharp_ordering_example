@@ -18,7 +18,7 @@ let order = {
                  Customer = System.Guid.NewGuid()
                  Lines = [{
                             Product = Views.Product1
-                            Quantity = 10.0m
+                            Quantity = 10
                          }] 
             }    
 //let events = seq {
