@@ -6,7 +6,7 @@
 // - Assign new order number
 // - Events
 // --- Store Order for reference
-
+// --- 
 // - Event handlers
 // --- Move products from store to temp storage
 // --- Update monthly reports
@@ -14,14 +14,13 @@
 open Ex
 open Ex.Orders
 
-let ctx = Ctx.current()
 let order = {
                  Customer = System.Guid.NewGuid()
                  Lines = [{
                             Product = Views.Product1
                             Quantity = 10.0m
                          }] 
-             }    
+            }    
 //let events = seq {
 //    yield! Orders.accept(order)
 //}
@@ -33,13 +32,4 @@ let events = Orders.accept(order)
 // 2. Update all views (async)
 
 events
-|> Seq.iter(EventStorage.push)
-
-       
-//module EventHandlers =
-//    let productAvailability (e : ProductPicked) =
-//        let product = Views.getProductAvailability(e.Product)        
-//        Views.addProductAvailability({              
-//                                        ProductID = e.Product
-//                                        Qty = product.Qty - e.Qty                        
-//                                    });
+|> Seq.iter(EventStorage.Push)

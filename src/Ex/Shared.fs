@@ -1,7 +1,7 @@
 ﻿namespace Ex
 
 type Amount = decimal
-type Quantity = decimal
+type Quantity = int
 type Number = string
 type Name = string
 type Ref = System.Guid

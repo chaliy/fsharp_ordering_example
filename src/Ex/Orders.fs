@@ -1,6 +1,7 @@
 ﻿module Ex.Orders
 
     open System
+    open Views
     
     type CustomerRef = Ref
     type OrderRef = Ref
@@ -32,8 +33,7 @@
          
     type OrderDetails = {
         Number : Number
-        Total : Amount        
-        Status: OrderStatus
+        Total : Amount
         Lines : OrderLine list        
     }    
 
@@ -44,26 +44,28 @@
     type ProductPicked = {
         Product : ProductRef
         Qty : Quantity
-    }    
-
+    }     
+            
     let event (evt:obj) = { Envelope = evt }
     
+    // Should fire this events
+    //  - OrderAccepted
+    //  - ProductPicked
     let accept(o : OrderCandidate) = seq {
                 
         let is_enough_inventory() =
             o.Lines
-            |> Seq.map(fun l -> (l, Views.getProductAvailability(l.Product)))
+            |> Seq.map(fun l -> (l, get l.Product))
             |> Seq.forall(fun (l, p) -> p.Qty > l.Quantity)
-                
-        yield event { Order = {
-                                Number = Numbers.next()
-                                Total = 12.0m
-                                Status = OrderStatus.NotEnoughInventory
-                                Lines = []
-                              } }
+       
+        yield event( { Order = {
+                                    Number = Numbers.next()
+                                    Total = 12.0m                                    
+                                    Lines = []
+                                } } )
 
-        if is_enough_inventory() then
+        if is_enough_inventory() then            
             yield! o.Lines
-                   |> Seq.map(fun l -> event { Product = l.Product
-                                               Qty = l.Quantity })        
+                   |> Seq.map(fun l -> event ( { Product = l.Product
+                                                 Qty = l.Quantity } ) )        
      }
