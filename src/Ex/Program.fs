@@ -14,7 +14,6 @@
 open Ex
 open Ex.Orders
 
-let uow = Uow.create()
 let ctx = Ctx.current()
 let order = {
                  Customer = System.Guid.NewGuid()
@@ -23,6 +22,24 @@ let order = {
                             Quantity = 10.0m
                          }] 
              }    
-Orders.accept(order, ctx, uow)
+//let events = seq {
+//    yield! Orders.accept(order)
+//}
 
-uow.Submit()
+let events = Orders.accept(order)
+
+// Next steps is
+// 1. Save event (sync)
+// 2. Update all views (async)
+
+events
+|> Seq.iter(EventStorage.push)
+
+       
+//module EventHandlers =
+//    let productAvailability (e : ProductPicked) =
+//        let product = Views.getProductAvailability(e.Product)        
+//        Views.addProductAvailability({              
+//                                        ProductID = e.Product
+//                                        Qty = product.Qty - e.Qty                        
+//                                    });

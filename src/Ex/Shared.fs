@@ -5,7 +5,9 @@ type Quantity = decimal
 type Number = string
 type Name = string
 type Ref = System.Guid
-type ID = System.Guid
+type Event = {
+    Envelope : obj
+}
 
 // Context
 module Ctx =
@@ -28,13 +30,7 @@ module Uow =
 
     let create<'a>() = new UnitOfWork<'a>(Ctx.current())
 
-//    let create<'a>() =
-//        { new IObserver<'a> with
-//            member this.OnNext(value : 'a) = ()
-//            member this.OnError(error : exn ) = ()
-//            member this.OnCompleted() = () }
-
 // Sequence Numbers
 module Numbers =
-    let next (ctx) : Number =
+    let next() : Number =
         "12"   

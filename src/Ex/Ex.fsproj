@@ -41,8 +41,8 @@
     <Compile Include="MongoDb.fs" />
     <Compile Include="Shared.fs" />
     <Compile Include="Views.fs" />
-    <Compile Include="Inventory.fs" />
     <Compile Include="Orders.fs" />
+    <Compile Include="EventStorage.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
