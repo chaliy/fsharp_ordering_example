@@ -9,6 +9,8 @@
         abstract member Map : obj -> (ID * 'd) seq
         abstract member Reduce : ID -> ('d seq) -> 'r seq
     
+    // This is problematic, because this guy will work 
+    // only on the whole set of events.    
     let productAvailability3 = 
         { new View<Quantity, ProductAvailability> with
 
@@ -34,7 +36,7 @@
                       ProductID = productPicked.Product
                       Qty = product.Qty - productPicked.Qty                        
                 }
-        | _ -> ()    
+        | _ -> ()
         
 
     let productAvailability2 (e : obj) =
