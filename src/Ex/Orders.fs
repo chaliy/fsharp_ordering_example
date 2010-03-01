@@ -38,7 +38,20 @@
     }    
 
     type OrderCreated = {    
-        Order : OrderDetails
+        Details : OrderDetails
+    }
+
+    type OrderPaid = {
+        Order : OrderRef
+        PaidDate : DateTime
+        Total : Amount
+    }
+
+    type OrderRevoked = {
+        Order : OrderRef
+        PaidDate : DateTime
+        Total : Amount
+        Reason : string
     }
 
     type ProductPicked = {
@@ -58,11 +71,11 @@
             |> Seq.map(fun l -> (l, get l.Product))
             |> Seq.forall(fun (l, p) -> p.Qty > l.Quantity)
        
-        yield event( { Order = {
+        yield event( { Details = {
                                     Number = Numbers.next()
                                     Total = 12.0m                                    
                                     Lines = []
-                                } } )
+                                 } } )
 
         if is_enough_inventory() then            
             yield! o.Lines

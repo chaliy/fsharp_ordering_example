@@ -8,6 +8,10 @@ type Ref = System.Guid
 type Event = {
     Envelope : obj
 }
+type Month = {
+    Year : int
+    Month : int
+}    
 
 // Context
 module Ctx =
@@ -33,4 +37,10 @@ module Uow =
 // Sequence Numbers
 module Numbers =
     let next() : Number =
-        "12"   
+        "12" 
+        
+[<AutoOpen>]
+module Helpers =  
+    let month (d:System.DateTime) =
+        { Year = d.Year
+          Month = d.Month }
