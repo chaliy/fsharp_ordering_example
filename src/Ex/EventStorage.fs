@@ -9,19 +9,23 @@
     type View<'k, 'd, 'r> =    
         abstract member Map : obj -> ('k * 'd) seq
         abstract member Reduce : 'k -> ('d seq) -> 'r seq
+        
+        
+    type View2<'k, 'd, 'r> = {
+        Map : obj -> ('k * 'd) seq
+        Reduce : 'k -> ('d seq) -> 'r seq            
+    }               
     
     // This is problematic, because this guy will work 
     // only on the whole set of events.    
     let productAvailability3 = 
-        { new View<ID, Quantity, ProductAvailability> with
-
-             member this.Map evt =
+        { Map = fun evt ->
                 seq { match evt with
                       | :? ProductPicked as productPicked ->
                           yield (productPicked.Product, productPicked.Qty)
                       | _ -> () }
 
-             member this.Reduce id details = 
+         Reduce = fun id details ->
                 seq { yield {
                                 ProductID = id
                                 Qty = details |> Seq.sumBy(fun x -> x)           
@@ -38,6 +42,15 @@
                       Qty = product.Qty - productPicked.Qty                        
                   }
         | _ -> ()
+
+//     let monthlyPaidReport2 = function                         
+//          // if order paid push total
+//          | :? OrderPaid as x ->
+//              push (month x.PaidDate, x.Total)
+//          // if revoked push negative total
+//          | :? OrderRevoked as x ->
+//              push (month x.PaidDate, -x.Total)
+//          | _ -> ()
 
     let monthlyPaidReport = 
         { new View<Month, Amount, MonthlyPaidReport> with
