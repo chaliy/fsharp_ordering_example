@@ -15,9 +15,9 @@ open Ex
 open Ex.Orders
 
 let order = {
-                 Customer = System.Guid.NewGuid()
+                 CustomerID = System.Guid.NewGuid()
                  Lines = [{
-                            Product = Views.Product1
+                            ProductID = Views.Product1
                             Quantity = 10
                          }] 
             }    

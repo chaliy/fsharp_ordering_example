@@ -2,64 +2,18 @@
 
     open System
     open Views
-    
-    type CustomerRef = Ref
-    type OrderRef = Ref
-    type ProductRef = Ref        
+    open Events       
     
     // Candidates
     type OrderLineCandidate = {
-        Product: ProductRef
+        ProductID: ID
         Quantity: Quantity        
     }
 
     type OrderCandidate = {        
-        Customer : CustomerRef
+        CustomerID : ID
         Lines: OrderLineCandidate list
-    }
-
-    // Model
-
-    type OrderStatus =
-    | Pending    
-    | Proved 
-    | NotEnoughInventory       
-        
-    type OrderLine = {
-        Quantity : Quantity
-        Amount : Amount
-        Product : ProductRef
-    }       
-         
-    type OrderDetails = {
-        Number : Number
-        Total : Amount
-        Lines : OrderLine list        
-    }    
-
-    type OrderCreated = {    
-        Details : OrderDetails
-    }
-
-    type OrderPaid = {
-        Order : OrderRef
-        PaidDate : DateTime
-        Total : Amount
-    }
-
-    type OrderRevoked = {
-        Order : OrderRef
-        PaidDate : DateTime
-        Total : Amount
-        Reason : string
-    }
-
-    type ProductPicked = {
-        Product : ProductRef
-        Qty : Quantity
-    }     
-            
-    let event (evt:obj) = { Envelope = evt }
+    }               
     
     // Should fire this events
     //  - OrderAccepted
@@ -68,17 +22,17 @@
                 
         let is_enough_inventory() =
             o.Lines
-            |> Seq.map(fun l -> (l, get l.Product))
+            |> Seq.map(fun l -> (l, get l.ProductID))
             |> Seq.forall(fun (l, p) -> p.Qty > l.Quantity)
-       
-        yield event( { Details = {
-                                    Number = Numbers.next()
-                                    Total = 12.0m                                    
-                                    Lines = []
-                                 } } )
+                        
+        yield event( (*OrderCreated*) { Details = {
+                                                        Number = Numbers.next()
+                                                        Total = 12.0m                                    
+                                                        Lines = []
+                                                   } } )
 
         if is_enough_inventory() then            
             yield! o.Lines
-                   |> Seq.map(fun l -> event ( { Product = l.Product
+                   |> Seq.map(fun l -> event ( { Product = l.ProductID
                                                  Qty = l.Quantity } ) )        
      }

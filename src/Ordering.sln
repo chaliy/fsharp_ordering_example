@@ -5,6 +5,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ex", "Ex\Ex.fsproj", "{F102
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Tests\Tests.fsproj", "{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ex2", "Ex2\Ex2.fsproj", "{3FC86603-3852-452C-8136-944D999CAD2D}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ex3", "Ex3\Ex3.fsproj", "{C432CA4B-ED97-48C5-9716-BF770B7D3088}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,6 +23,14 @@ Global
 		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Debug|x86.Build.0 = Debug|x86
 		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Release|x86.ActiveCfg = Release|x86
 		{0488966A-8FE4-46F3-BFE2-83D1A274ECE8}.Release|x86.Build.0 = Release|x86
+		{3FC86603-3852-452C-8136-944D999CAD2D}.Debug|x86.ActiveCfg = Debug|x86
+		{3FC86603-3852-452C-8136-944D999CAD2D}.Debug|x86.Build.0 = Debug|x86
+		{3FC86603-3852-452C-8136-944D999CAD2D}.Release|x86.ActiveCfg = Release|x86
+		{3FC86603-3852-452C-8136-944D999CAD2D}.Release|x86.Build.0 = Release|x86
+		{C432CA4B-ED97-48C5-9716-BF770B7D3088}.Debug|x86.ActiveCfg = Debug|x86
+		{C432CA4B-ED97-48C5-9716-BF770B7D3088}.Debug|x86.Build.0 = Debug|x86
+		{C432CA4B-ED97-48C5-9716-BF770B7D3088}.Release|x86.ActiveCfg = Release|x86
+		{C432CA4B-ED97-48C5-9716-BF770B7D3088}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

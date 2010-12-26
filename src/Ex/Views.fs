@@ -1,57 +1,7 @@
 ﻿module Ex.Views
-
+    
     open System
-    open System.Collections.Generic
-
-    type ID = Guid       
-
-//    type OrderPosted = {
-//        Details : OrderDetails
-//    }
-
-//    type OrderPaid = {
-//        Order : OrderRef
-//        Amount : Amount
-//    }
-
-//    type InventoryMoved = {
-//        Inventory : InventoryRef
-//        Qty : Quantity
-//    }
-
-//    type MonthlyPaidReport = {
-//        Date : Month
-//        Total : Amount
-//    }
-
-//    type PaidOrder = {
-//        OrderNumber : Nubmer
-//        PaidData : Date
-//        CustomerName : FullName
-//        Total : Amount        
-//    }
-        
-//    let handleOrderPaid(evt) =
-//        // Prepare data
-//        let order = Orders.get(evt.Order)
-//        let customer = Customers.get(order.Customer)
-//        // Store denormalized data to PaidOrders table
-//        PaidOrders.add({
-//                            OrderNumber = order.Number
-//                            PaidDate = evt.PaidDate
-//                            CustomerName = customer.Name
-//                            Total = order.Total
-//                       });
-
-//    let handleOrderPaidMonthly(evt) =        
-//        // Store denormalized data
-//        MonthlyPaidReport.get(amoun
-//        MonthlyPaidReport.add({
-//                            OrderNumber = order.Number
-//                            PaidDate = evt.PaidDate
-//                            CustomerName = customer.Name
-//                            Total = order.Total
-//                       });
+    open System.Collections.Generic    
 
     let get<'a> (id:ID) = 
         Activator.CreateInstance<'a>()
@@ -83,4 +33,4 @@
                                   };{                         
                                         ProductID = Product2
                                         Qty = 1234
-                                  }])        
+                                  }])
