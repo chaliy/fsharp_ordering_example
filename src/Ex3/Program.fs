@@ -1,35 +1,23 @@
-﻿let bus = new Event<obj>()
-let readBus = bus.Publish
-let promote evt =    
-    ()
+﻿module Model =
 
-module Identifiers =
+    // Inventory
 
     type ProductID = {
         SKU : string
-    }
+    }    
+
+    // Purchasing
 
     type OrderID = {
         OrderNumber : string
     }
 
-module Invnetory =
-
-    type StocksEvents =
-    | StocksReserved of Identifiers.OrderID * Identifiers.ProductID * int
-    | ApplyStocks of Identifiers.OrderID * Identifiers.ProductID * int
-        
-    let reserveStocks orderID productID qty =
-        promote(StocksReserved(orderID, productID, qty))
-
-module Purchasing =
-  
     type DeliveryMethod =
     | MethodA
     | MethodB
 
     type OrderItem = {
-        Product : Identifiers.ProductID
+        Product : ProductID
         Quantity : int
         Price : decimal
         DeliveryMethod : DeliveryMethod
@@ -41,11 +29,30 @@ module Purchasing =
         Items : OrderItem list
     }
     
-    type OrderEvents =    
+    type Events =
+    // Stocks event
+    | StocksReserved of OrderID * ProductID * int
+    | ApplyStocks of OrderID * ProductID * int    
+    // Purchsing
     | OrderPlaced of Order
-    | OrderPayed of Identifiers.OrderID * System.DateTime
-    | OrderDelivered of Identifiers.OrderID * System.DateTime
+    | OrderPayed of OrderID * System.DateTime
+    | OrderDelivered of OrderID * System.DateTime
 
+
+// Logic
+open Model
+
+let bus = new Event<Events>()
+let readBus = bus.Publish
+let promote evt = bus.Trigger(evt)
+
+module Invnetory =
+    
+    let reserveStocks orderID productID qty =
+        promote(StocksReserved(orderID, productID, qty))
+
+module Purchasing =
+  
     let validatePlaceOrder order = true
     
     let placeOrder order =
@@ -72,12 +79,7 @@ module Purchasing =
 
 // For all order placed 
 readBus 
-|> Event.choose(function
-                 | :? Purchasing.OrderEvents as x -> 
-                    match x with
-                    | Purchasing.OrderEvents.OrderPlaced(o) -> Some(o)
-                    | _  -> None
-                 | _  -> None )
+|> Event.choose(function | Model.OrderPlaced(o) -> Some(o) | _  -> None )
 |> Event.add(fun order -> 
     order.Items
     |> Seq.iter(fun item -> Invnetory.reserveStocks { OrderNumber = order.Number } item.Product item.Quantity) )
